@@ -9,7 +9,7 @@ import click
 # todo recode from https://editor.p5js.org/Pi_p5/sketches/qAqoieAhx
 
 def add_noise_to_img(img, dist_from_center=50, amount_of_noise=50):
-    '''
+  '''
     다운스케일된 작은 이미지의 가장자리 영역을 확률적으로 제거하고,
     제거된 위치를 mask로 반환하는 함수.
 
@@ -126,13 +126,14 @@ def get_mask_image(img, downscale_factor=4, noise_distance=20, noise_prob=0):
     
   # 작은 이미지 가장자리 제거
   noised_img, mask = add_noise_to_img(img_downscaled, 20, 0)
+    
   img_arr = np.array(img)
 
   # 중앙 영역 크기 계산
   small_size = int(len(img_arr) / downscale_factor)
     
   # 중앙 시작 좌표 계산 (정중앙 정렬)
-  xy1_mask_img = int(len(img_arr) - small_size - ( ( len(img_arr) - (len(img_arr)/ downscale_factor)  ) / 2))
+  xy1_mask_img = int(len(img_arr) - small_size - ((len(img_arr) - small_size) / 2))
   xy2_mask_img = xy1_mask_img + small_size
 
   # 전체를 흰색(255)으로 초기화
@@ -189,9 +190,9 @@ def get_init_mask_image(img, downscale_factor=4, noise_distance=20, noise_prob=0
   return init_image, full_mask
 
 @click.command()
-@click.option('--input_image', help='Image to use as input. (512x512)')
-@click.option('--output_init', default="./init.png", help='Path to save init image.')
-@click.option('--output_mask', default="./mask.png", help='Path to save mask image.')
+@click.option('--input_image', default="images/base.png", help='Image to use as input. (512x512)')
+@click.option('--output_init', default="images/init.png", help='Path to save init image.')
+@click.option('--output_mask', default="images/mask.png", help='Path to save mask image.')
 @click.option('--downscale_factor', default=4)
 @click.option('--noise_distance', default=20)
 @click.option('--noise_prob', default=0)
